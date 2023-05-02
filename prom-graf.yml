@@ -1,0 +1,8 @@
+- name: install monitoring stack
+  hosts: server1 
+  become: yes
+  roles:
+  - prometheus
+  - grafana
+# - loki
+  - loki1

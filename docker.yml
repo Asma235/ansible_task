@@ -1,0 +1,14 @@
+#master_node
+- name: Node-exporter
+  hosts: server2
+  become: true
+  become_method: sudo
+  become_user: root
+  vars:
+    ansible_become_pass: Password
+  connection: ssh
+  roles:
+    - docker
+    - mynode-exporter
+    - promtail
+    - loki
