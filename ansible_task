@@ -1,0 +1,6 @@
+ ansible_task for manual
+ install ansible in masternode
+                    node1 
+                    node2
+  ansible_task for automation                  
+                    
