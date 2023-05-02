@@ -1,0 +1,66 @@
+---
+#installation of docker
+- name: Update apt cache
+  apt:
+    update_cache: no
+
+- name: Install Docker dependencies
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+
+- name: Add Docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker APT repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+    state: present
+
+- name: Install Docker
+  apt:
+    name: docker-ce
+    state: present
+
+- name: Add user to Docker group
+  user:
+    name: ansible
+    groups: docker
+    append: yes
+
+- name: Install Python
+  apt:
+    name: python3
+    state: present
+
+- name: Install Python pip
+  apt:
+    name: python3-pip
+    state: present
+
+- name: Install Docker Python library
+  pip:
+    name: docker
+- name: Login to Docker registry
+  docker_login:
+    username: asmashaik0186
+    password: Asma235214@
+
+- name: Pull Docker image
+  docker_image:
+    name: asmashaik0186/myimage
+    source: pull
+
+- name: Run Docker container
+  docker_container:
+    name: ansiblecontainer
+    image: asmashaik0186/myimage
+    ports:
+      - "8180:8080"
+    state: started
